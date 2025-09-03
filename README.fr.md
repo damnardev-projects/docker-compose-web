@@ -1,13 +1,19 @@
-# Docker Compose Boilerplate
+# Docker Compose PHP
 
 [![en](https://img.shields.io/badge/lang-en-blue.svg)](README.md)
 [![fr](https://img.shields.io/badge/lang-fr-blue.svg)](README.fr.md)
 
 ## Introduction
 
-Docker Compose Boilerplate est une configuration Docker Compose prête à l'emploi qui fournit une base rationalisée pour les
-applications conteneurisées. Ce projet inclut un script de gestion complet (`docker-manager.sh`) qui simplifie les
-opérations Docker et fournit une interface intuitive pour gérer vos services conteneurisés.
+Ce projet fournit une configuration Docker Compose prête à l'emploi pour lancer PHP-FPM, le tout conteneurisé dans Docker. Il offre une base rationalisée pour le développement d'applications PHP en utilisant PHP-FPM comme moteur de traitement PHP. Le projet inclut un script de gestion complet (`docker-manager.sh`) qui simplifie les opérations Docker et fournit une interface intuitive pour gérer vos services conteneurisés.
+
+## Versions des logiciels
+
+Cette configuration Docker Compose inclut les versions de logiciels suivantes :
+
+| Logiciel | Version |
+|----------|---------|
+| PHP-FPM  | 8.4     |
 
 ### Structure du Projet
 
@@ -19,12 +25,13 @@ opérations Docker et fournit une interface intuitive pour gérer vos services c
 ├── docker-compose.yml      # Configuration Docker Compose
 ├── docker-manager.sh       # Script de gestion pour les opérations Docker
 ├── LICENSE                 # Licence du projet
-└── README.md               # Ce fichier
+├── README.md               # Ce fichier
+└── www/                    # Répertoire racine des fichiers PHP
 ```
 
 ### Prérequis
 
-Avant d'utiliser ce boilerplate Docker, assurez-vous d'avoir les outils suivants installés :
+Avant d'utiliser ce Docker PHP, assurez-vous d'avoir les outils suivants installés :
 
 - **Docker** : Plateforme de conteneurs (version 20.10 ou supérieure recommandée)
 - **Docker Compose** : Applications Docker multi-conteneurs (version 2.0 ou supérieure)
@@ -49,8 +56,12 @@ Pour commencer, créez un fichier `.env` en copiant le fichier `.env.example` co
 cp .env.example .env
 ```
 
-Configurez vos variables d'environnement dans le fichier approprié selon votre cible de déploiement. Le script utilise
-automatiquement `.env` par défaut.
+Configurez vos variables d'environnement dans le fichier approprié en fonction de votre cible de déploiement. Le script utilise automatiquement `.env` par défaut.
+
+| Variable   | Description |
+|------------|-------------|
+| NAME       | Le nom du projet (utilisé dans les noms de conteneurs) |
+| EXPOSE_PHP | Le port sur lequel PHP-FPM sera exposé |
 
 ### Exécution du Projet
 

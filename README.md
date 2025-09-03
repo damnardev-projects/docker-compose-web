@@ -1,13 +1,19 @@
-# Docker Compose Boilerplate
+# Docker Compose PHP
 
-[![en](https://img.shields.io/badge/lang-en-blue.svg)](README.md)
 [![fr](https://img.shields.io/badge/lang-fr-blue.svg)](README.fr.md)
+[![en](https://img.shields.io/badge/lang-en-blue.svg)](README.md)
 
 ## Introduction
 
-Docker Compose Boilerplate is a ready-to-use Docker Compose setup that provides a streamlined foundation for containerized
-applications. This project includes a comprehensive management script (`docker-manager.sh`) that simplifies Docker
-operations and provides an intuitive interface for managing your containerized services.
+This project provides a ready-to-use Docker Compose configuration to run PHP-FPM, fully containerized in Docker. It offers a streamlined foundation for developing PHP applications using PHP-FPM as the PHP processing engine. The project includes a comprehensive management script (`docker-manager.sh`) that simplifies Docker operations and provides an intuitive interface for managing your containerized services.
+
+## Software Versions
+
+This Docker Compose configuration includes the following software versions:
+
+| Software | Version |
+|----------|---------|
+| PHP-FPM  | 8.4     |
 
 ### Project Structure
 
@@ -19,12 +25,13 @@ operations and provides an intuitive interface for managing your containerized s
 ├── docker-compose.yml      # Docker Compose configuration
 ├── docker-manager.sh       # Management script for Docker operations
 ├── LICENSE                 # Project license
-└── README.md               # This file
+├── README.md               # This file
+└── www/                    # Root directory for PHP files
 ```
 
 ### Prerequisites
 
-Before using this Docker boilerplate, ensure you have the following tools installed:
+Before using this Docker PHP setup, make sure you have the following tools installed:
 
 - **Docker**: Container platform (version 20.10 or higher recommended)
 - **Docker Compose**: Multi-container Docker applications (version 2.0 or higher)
@@ -39,7 +46,7 @@ Before using this Docker boilerplate, ensure you have the following tools instal
    ```bash
    chmod +x docker-manager.sh
    ```
-4. Verify that Docker and Docker Compose are running
+4. Ensure Docker and Docker Compose are running
 
 ### Configuration
 
@@ -49,24 +56,28 @@ To get started, create a `.env` file by copying the `.env.example` file as a sta
 cp .env.example .env
 ```
 
-Configure your environment variables in the appropriate file based on your deployment target. The script automatically
-uses `.env` by default.
+Configure your environment variables in the appropriate file according to your deployment target. The script automatically uses `.env` by default.
+
+| Variable   | Description |
+|------------|-------------|
+| NAME       | The project name (used in container names) |
+| EXPOSE_PHP | The port on which PHP-FPM will be exposed |
 
 ### Running the Project
 
 Use the `docker-manager.sh` script to manage your Docker containers. The script provides the following commands:
 
-| Command                                 | Description                                          |
-|-----------------------------------------|------------------------------------------------------|
-| `./docker-manager.sh start`             | Start all Docker containers in detached mode         |
-| `./docker-manager.sh stop`              | Stop all running Docker containers                   |
-| `./docker-manager.sh restart`           | Stop and then start all Docker containers            |
-| `./docker-manager.sh status`            | Display the current status of all containers         |
-| `./docker-manager.sh logs [CONTAINER]`  | Show logs for all containers or a specific container |
-| `./docker-manager.sh connect [SERVICE]` | Connect to a running container                       |
-| `./docker-manager.sh env`               | Display current environment variables                |
-| `./docker-manager.sh recreate`          | Pull latest images, rebuild, and recreate containers |
-| `./docker-manager.sh prune`             | Remove stopped containers and unused images/volumes  |
-| `./docker-manager.sh backup`            | Create a backup of all Docker volumes                |
-| `./docker-manager.sh restore [FILE]`    | Restore Docker volumes from backup file              |
-| `./docker-manager.sh help`              | Display help information with all available commands |
+| Command                                 | Description                                                            |
+|-----------------------------------------|------------------------------------------------------------------------|
+| `./docker-manager.sh start`             | Start all Docker containers in detached mode                           |
+| `./docker-manager.sh stop`              | Stop all running Docker containers                                     |
+| `./docker-manager.sh restart`           | Stop then start all Docker containers                                  |
+| `./docker-manager.sh status`            | Show the current status of all containers                              |
+| `./docker-manager.sh logs [CONTAINER]`  | Show logs for all containers or a specific container                   |
+| `./docker-manager.sh connect [SERVICE]` | Connect to a running container                                        |
+| `./docker-manager.sh env`               | Display current environment variables                                  |
+| `./docker-manager.sh recreate`          | Pull latest images, rebuild and recreate containers                    |
+| `./docker-manager.sh prune`             | Remove stopped containers and unused images/volumes                    |
+| `./docker-manager.sh backup`            | Create a backup of all Docker volumes                                  |
+| `./docker-manager.sh restore [FILE]`    | Restore Docker volumes from a backup file                              |
+| `./docker-manager.sh help`              | Show help information with all available commands                      |
