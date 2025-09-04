@@ -1,31 +1,25 @@
 name: ${NAME}
 
 services:
-  app:
-    image: alpine:latest
-    container_name: ${NAME}-app
-    command: [ "sh", "-c", "while true; do echo 'Hello from ${NAME}-app'; sleep 10s; done" ]
-    depends_on:
-      mongodb:
-        condition: service_healthy
-
-  mongodb:
-    image: mongo:latest
-    container_name: ${NAME}-mongodb
-    restart: unless-stopped
-    ports:
-      - "${MONGODB_PORT}:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
-    volumes:
-      - mongodb_data:/data/db
+  php:
+    image: php:8.4-fpm
+    container_name: ${NAME}-fpm
+    user: "1000:1000"
     healthcheck:
-      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
+      test: ["CMD", "php-fpm", "-t"]
       interval: 30s
-      timeout: 10s
+      timeout: 5s
       retries: 5
-      start_period: 10s
-
-volumes:
-  mongodb_data:
+      start_period: 30s
+    ports:
+      - "${EXPOSE_PHP}:9000"
+    restart: unless-stopped
+    volumes:
+      - ./www:/var/www/html
+      - ./php.ini:/usr/local/etc/php/php.ini:ro
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M

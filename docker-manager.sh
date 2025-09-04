@@ -12,7 +12,7 @@ COMPOSE_FILE="docker-compose.yml"
 ENV_FILE=".env"
 PROJECT_NAME=$(grep -E '^NAME=' "$ENV_FILE" 2>/dev/null | cut -d'=' -f2 | tr -d '\r\n')
 if [ -z "$PROJECT_NAME" ]; then
-    PROJECT_NAME="docker-compose-boilerplate"
+    PROJECT_NAME="docker-compose-php"
 fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -44,7 +44,7 @@ standard_message() {
 
 display_header() {
     standard_message "╔════════════════════════════════════════╗"
-    standard_message "║    Docker Compose Boilerplate v1.0.0   ║"
+    standard_message "║        Docker Compose PHP v1.0.0       ║"
     standard_message "║     Docker Compose Management Tool     ║"
     standard_message "╚════════════════════════════════════════╝"
     empty_line
