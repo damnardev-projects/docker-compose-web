@@ -1,11 +1,11 @@
-# Docker Compose PHP
+# Docker Compose Web
 
 [![en](https://img.shields.io/badge/lang-en-blue.svg)](README.md)
 [![fr](https://img.shields.io/badge/lang-fr-blue.svg)](README.fr.md)
 
 ## Introduction
 
-Ce projet fournit une configuration Docker Compose prête à l'emploi pour lancer PHP-FPM, le tout conteneurisé dans Docker. Il offre une base rationalisée pour le développement d'applications PHP en utilisant PHP-FPM comme moteur de traitement PHP. Le projet inclut un script de gestion complet (`docker-manager.sh`) qui simplifie les opérations Docker et fournit une interface intuitive pour gérer vos services conteneurisés.
+Ce projet fournit une configuration Docker Compose prête à l'emploi pour lancer NGINX + PHP-FPM, le tout conteneurisé dans Docker. Il offre une base rationalisée pour le développement d'applications PHP en utilisant NGINX + PHP-FPM comme moteur de traitement PHP. Le projet inclut un script de gestion complet (`docker-manager.sh`) qui simplifie les opérations Docker et fournit une interface intuitive pour gérer vos services conteneurisés.
 
 ## Versions des logiciels
 
@@ -13,6 +13,7 @@ Cette configuration Docker Compose inclut les versions de logiciels suivantes :
 
 | Logiciel | Version |
 |----------|---------|
+| NGINX    | 1.29.1  |
 | PHP-FPM  | 8.4     |
 
 ### Structure du Projet
@@ -21,6 +22,9 @@ Cette configuration Docker Compose inclut les versions de logiciels suivantes :
 .
 ├── .github/
 │   └── workflows/          # Workflows GitHub Actions
+├── config/
+│   ├── nginx.conf          # Configuration NGINX
+│   └── php.ini             # Configuration PHP
 ├── .env.example            # Variables d'environnement de développement
 ├── docker-compose.yml      # Configuration Docker Compose
 ├── docker-manager.sh       # Script de gestion pour les opérations Docker
@@ -31,7 +35,7 @@ Cette configuration Docker Compose inclut les versions de logiciels suivantes :
 
 ### Prérequis
 
-Avant d'utiliser ce Docker PHP, assurez-vous d'avoir les outils suivants installés :
+Avant d'utiliser ce Docker Web, assurez-vous d'avoir les outils suivants installés :
 
 - **Docker** : Plateforme de conteneurs (version 20.10 ou supérieure recommandée)
 - **Docker Compose** : Applications Docker multi-conteneurs (version 2.0 ou supérieure)
@@ -62,6 +66,7 @@ Configurez vos variables d'environnement dans le fichier approprié en fonction 
 |------------|-------------|
 | NAME       | Le nom du projet (utilisé dans les noms de conteneurs) |
 | EXPOSE_PHP | Le port sur lequel PHP-FPM sera exposé |
+| EXPOSE_NGINX | Le port sur lequel NGINX sera exposé |
 
 ### Exécution du Projet
 

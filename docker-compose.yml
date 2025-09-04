@@ -3,8 +3,7 @@ name: ${NAME}
 services:
   php:
     image: php:8.4-fpm
-    container_name: ${NAME}-fpm
-    user: "1000:1000"
+    container_name: ${NAME}-php
     healthcheck:
       test: ["CMD", "php-fpm", "-t"]
       interval: 30s
@@ -16,7 +15,33 @@ services:
     restart: unless-stopped
     volumes:
       - ./www:/var/www/html
-      - ./php.ini:/usr/local/etc/php/php.ini:ro
+      - ./config/php.ini:/usr/local/etc/php/php.ini:ro
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M
+
+  nginx:
+    image: nginx:1.29.1
+    container_name: ${NAME}-nginx
+    depends_on:
+      php:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:80"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    ports:
+      - "${EXPOSE_NGINX}:80"
+    restart: unless-stopped
+    volumes:
+      - ./www:/var/www/html
+      - ./config/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./logs/nginx:/var/log/nginx
     deploy:
       resources:
         limits:
